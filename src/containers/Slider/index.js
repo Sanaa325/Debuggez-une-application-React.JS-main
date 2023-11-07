@@ -8,11 +8,11 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+    new Date(evtB.date) > new Date(evtA.date) ? 1 : -1 // Comparaison des dates des evenmts pour afficher ds ordre decroissant 
   );
   const nextCard = () => {
     setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
+      () => setIndex(index < byDateDesc.length -1 ? index + 1 : 0), // Passer á element suivant sinon revenir au début qd on atteint fin de liste
       5000
     );
   };
@@ -42,10 +42,10 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  key={`${_.title}`} // Modification key .Event par _.title
                   type="radio"
                   name="radio-button"
-                  checked={idx === radioIdx}
+                  checked={index === radioIdx}  // remplace idx par index
                 />
               ))}
             </div>
